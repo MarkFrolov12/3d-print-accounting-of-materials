@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Учет материалов</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>3D Print Manager</h1>
+            <nav>
+                <a href="index.html">Главная</a>
+                <a href="materials.html" class="active">Материалы</a>
+                <a href="catalog.html">Каталог</a>
+                <a href="orders.html">Заказы</a>
+            </nav>
+        </header>
+
+        <main>
+            <h2>📦 Учет материалов</h2>
+            
+            <button id="add-material" class="btn">+ Добавить материал</button>
+            
+            <table id="materials-table">
+                <thead>
+                    <tr>
+                        <th>Название</th>
+                        <th>Цена за кг</th>
+                        <th>Остаток (г)</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Данные будут загружены через JS -->
+                </tbody>
+            </table>
+        </main>
+    </div>
+
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Редактировать материал</h3>
+            <form id="edit-material-form">
+                <input type="hidden" id="edit-material-id">
+                <div class="form-group">
+                    <label for="edit-material-name">Название:</label>
+                    <input type="text" id="edit-material-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-material-price">Цена за кг (₽):</label>
+                    <input type="number" id="edit-material-price" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-material-remaining">Остаток (г):</label>
+                    <input type="number" id="edit-material-remaining" required>
+                </div>
+                <button type="submit" class="btn">Сохранить</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/materials.js"></script>
+</body>
+</html>

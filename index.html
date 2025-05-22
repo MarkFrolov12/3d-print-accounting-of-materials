@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Print Manager</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>3D Print Manager</h1>
+            <nav>
+                <a href="index.html" class="active">Главная</a>
+                <a href="materials.html">Материалы</a>
+                <a href="catalog.html">Каталог</a>
+                <a href="orders.html">Заказы</a>
+            </nav>
+        </header>
+
+        <main>
+            <section class="dashboard">
+                <h2>📊 Сводка</h2>
+                <div class="stats">
+                    <div class="stat-card">
+                        <h3>Доход</h3>
+                        <p id="total-earned">0 ₽</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Расход</h3>
+                        <p id="total-spent">0 ₽</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Прибыль</h3>
+                        <p id="total-profit">0 ₽</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/finance.js"></script>
+</body>
+</html>

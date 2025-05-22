@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Заказы</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>3D Print Manager</h1>
+            <nav>
+                <a href="index.html">Главная</a>
+                <a href="materials.html">Материалы</a>
+                <a href="catalog.html">Каталог</a>
+                <a href="orders.html" class="active">Заказы</a>
+            </nav>
+        </header>
+
+        <main>
+            <h2>📝 Заказы</h2>
+            
+            <div class="order-controls">
+                <button id="add-order" class="btn">+ Новый заказ</button>
+                
+                <div class="filter">
+                    <label for="status-filter">Фильтр по статусу:</label>
+                    <select id="status-filter">
+                        <option value="all">Все</option>
+                        <option value="working">В работе</option>
+                        <option value="ready">Готов</option>
+                        <option value="sold">Продано</option>
+                        <option value="canceled">Отменено</option>
+                    </select>
+                </div>
+            </div>
+            
+            <table id="orders-table">
+                <thead>
+                    <tr>
+                        <th>Дата</th>
+                        <th>Изделие</th>
+                        <th>Вес</th>
+                        <th>Цена</th>
+                        <th>Заказчик</th>
+                        <th>Статус</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Данные будут загружены через JS -->
+                </tbody>
+                
+            </table>
+        </main>
+    </div>
+
+    <div id="order-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3 id="order-modal-title">Новый заказ</h3>
+            <form id="order-form">
+                <input type="hidden" id="order-id">
+                <div class="form-group">
+                    <label for="order-product">Изделие:</label>
+                    <select id="order-product" required>
+                        <!-- Опции будут загружены через JS -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="order-customer">Заказчик:</label>
+                    <input type="text" id="order-customer" required>
+                </div>
+                <div class="form-group">
+                    <label for="order-status">Статус:</label>
+                    <select id="order-status" required>
+                        <option value="working">В работе</option>
+                        <option value="ready">Готов</option>
+                        <option value="sold">Продано</option>
+                        <option value="canceled">Отменено</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="order-date">Дата:</label>
+                    <input type="date" id="order-date" required>
+                </div>
+                <button type="submit" class="btn">Сохранить</button>
+            </form>
+        </div>
+    </div>
+
+
+    
+    <script src="js/orders.js"></script>
+</body>
+</html>
