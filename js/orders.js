@@ -109,20 +109,32 @@ function editOrder(id) {
 }
 
 
+
+
 function saveOrder(e) {
     e.preventDefault();
     
-    const productId = parseInt(document.getElementById('order-product').value);
-    const customer = document.getElementById('order-customer').value.trim();
-    const status = document.getElementById('order-status').value;
-    const date = document.getElementById('order-date').value || new Date().toISOString().split('T')[0];
+    // Получаем элемент выбора изделия
+    const productSelect = document.getElementById('order-product');
+    if (!productSelect) {
+        alert('Ошибка: элемент выбора изделия не найден');
+        return;
+    }
     
-    // Валидация
-    if (!productId) {
+    // Получаем значение выбранного изделия
+    const productId = parseInt(productSelect.value);
+    
+    // Валидация productId
+    if (isNaN(productId) || productSelect.selectedIndex === -1) {
         alert('Пожалуйста, выберите изделие');
         return;
     }
     
+    const customer = document.getElementById('order-customer').value.trim();
+    const status = document.getElementById('order-status').value;
+    const date = document.getElementById('order-date').value || new Date().toISOString().split('T')[0];
+    
+    // Валидация заказчика
     if (!customer) {
         alert('Пожалуйста, укажите заказчика');
         return;
@@ -177,6 +189,11 @@ function saveOrder(e) {
     saveOrders();
     closeOrderModal();
 }
+
+
+
+
+
 
 // Новая функция для обновления веса материала
 function updateMaterialWeight(materialId, weight, operation) {

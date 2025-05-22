@@ -1,3 +1,11 @@
+// Генерация уникального id
+function generateId() {
+    return Date.now().toString(36) + Math.random().toString(36).substr(2);
+}
+
+let products = JSON.parse(localStorage.getItem('products')) || [];
+let currentProductId = null;
+
 document.addEventListener('DOMContentLoaded', function() {
     loadProducts();
     loadMaterialOptions();
@@ -6,9 +14,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('product-form').addEventListener('submit', saveProduct);
     document.querySelector('#product-modal .close').addEventListener('click', closeProductModal);
 });
-
-let products = JSON.parse(localStorage.getItem('products')) || [];
-let currentProductId = null;
 
 function loadProducts() {
     const materials = JSON.parse(localStorage.getItem('materials')) || [];
@@ -27,12 +32,27 @@ function loadProducts() {
                 <td>${product.price} ₽</td>
                 <td>${materialName}</td>
                 <td>
-                    <button class="btn-edit" onclick="editProduct(${product.id})">✏️</button>
-                    <button class="btn-delete" onclick="deleteProduct(${product.id})">🗑️</button>
+                    <button class="btn-edit" data-id="${product.id}">✏️</button>
+                    <button class="btn-delete" data-id="${product.id}">🗑️</button>
                 </td>
             </tr>
         `;
     }).join('');
+    
+    // Add event listeners to all edit and delete buttons
+    tbody.querySelectorAll('.btn-edit').forEach(button => {
+        button.addEventListener('click', () => {
+            const id = button.getAttribute('data-id');
+            editProduct(id);
+        });
+    });
+    
+    tbody.querySelectorAll('.btn-delete').forEach(button => {
+        button.addEventListener('click', () => {
+            const id = button.getAttribute('data-id');
+            deleteProduct(id);
+        });
+    });
 }
 
 function calculateProductCost(weight, materialId) {
@@ -82,11 +102,17 @@ function editProduct(id) {
 function saveProduct(e) {
     e.preventDefault();
     
-    const id = currentProductId || Date.now();
-    const name = document.getElementById('product-name').value;
+    const id = currentProductId || generateId();
+    const name = document.getElementById('product-name').value.trim();
     const weight = parseInt(document.getElementById('product-weight').value);
     const materialId = parseInt(document.getElementById('product-material').value);
     const price = parseFloat(document.getElementById('product-price').value);
+    
+    // Проверка на валидность данных
+    if (!name || isNaN(weight) || isNaN(materialId) || isNaN(price)) {
+        alert('Пожалуйста, заполните все поля корректно!');
+        return;
+    }
     
     const product = { id, name, weight, materialId, price };
     
@@ -117,6 +143,7 @@ function saveProducts() {
 
 function closeProductModal() {
     document.getElementById('product-modal').style.display = 'none';
+    document.getElementById('product-form').reset();
 }
 
 // Глобальные функции для использования в HTML

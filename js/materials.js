@@ -1,3 +1,11 @@
+// Генерация уникального id
+function generateId() {
+    return Date.now().toString(36) + Math.random().toString(36).substr(2);
+}
+
+let materials = JSON.parse(localStorage.getItem('materials')) || [];
+let currentMaterialId = null;
+
 document.addEventListener('DOMContentLoaded', function() {
     loadMaterials();
     
@@ -5,9 +13,6 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('edit-material-form').addEventListener('submit', saveMaterial);
     document.querySelector('.close').addEventListener('click', closeModal);
 });
-
-let materials = JSON.parse(localStorage.getItem('materials')) || [];
-let currentMaterialId = null;
 
 function loadMaterials() {
     const tbody = document.querySelector('#materials-table tbody');
@@ -48,10 +53,16 @@ function editMaterial(id) {
 function saveMaterial(e) {
     e.preventDefault();
     
-    const id = currentMaterialId || Date.now();
-    const name = document.getElementById('edit-material-name').value;
+    const id = currentMaterialId || generateId();
+    const name = document.getElementById('edit-material-name').value.trim();
     const pricePerKg = parseFloat(document.getElementById('edit-material-price').value);
     const remaining = parseInt(document.getElementById('edit-material-remaining').value);
+    
+    // Проверка на валидность данных
+    if (!name || isNaN(pricePerKg) || isNaN(remaining) || pricePerKg < 0 || remaining < 0) {
+        alert('Пожалуйста, заполните все поля корректно!');
+        return;
+    }
     
     const material = { id, name, pricePerKg, remaining };
     
@@ -82,6 +93,7 @@ function saveMaterials() {
 
 function closeModal() {
     document.getElementById('edit-modal').style.display = 'none';
+    document.getElementById('edit-material-form').reset();
 }
 
 // Глобальные функции для использования в HTML

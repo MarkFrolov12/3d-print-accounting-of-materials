@@ -11,10 +11,18 @@ function loadRecentOrders() {
     // Фильтруем только проданные или отмененные заказы
     const recentOrders = orders
         .filter(order => order.status === 'sold' || order.status === 'canceled')
-        .slice(0, 5) // Берем последние 5
-        .reverse(); // Новые сверху
+        // Сортируем по дате (новые сверху)
+        .sort((a, b) => new Date(b.date) - new Date(a.date))
+        // Берем последние 5
+        .slice(0, 5);
     
     const container = document.getElementById('recent-orders-list');
+    if (!container) return;
+    
+    if (recentOrders.length === 0) {
+        container.innerHTML = '<div class="no-orders">Нет последних заказов</div>';
+        return;
+    }
     
     container.innerHTML = recentOrders.map(order => `
         <div class="order-item">
@@ -27,8 +35,11 @@ function loadRecentOrders() {
 }
 
 function formatDate(dateString) {
+    if (!dateString) return '—';
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return '—';
     const options = { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' };
-    return new Date(dateString).toLocaleDateString('ru-RU', options);
+    return date.toLocaleDateString('ru-RU', options);
 }
 
 function getStatusText(status) {
